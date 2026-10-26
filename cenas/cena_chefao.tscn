@@ -1,0 +1,68 @@
+[gd_scene load_steps=10 format=3 uid="uid://qfrwh4npo087"]
+
+[ext_resource type="Script" path="res://cenas/Chefao.gd" id="1_vwmnk"]
+[ext_resource type="PackedScene" uid="uid://pel1xau5wmyb" path="res://cenas/tiro_chefe.tscn" id="2_0toyx"]
+[ext_resource type="Texture2D" uid="uid://o6ws0ixbktes" path="res://Sprites/CHEFAO.png" id="2_vtx7l"]
+[ext_resource type="PackedScene" uid="uid://bgwkj031re6o6" path="res://cenas/jogador.tscn" id="3_k17fu"]
+[ext_resource type="AudioStream" uid="uid://bo0rlxuvigkdq" path="res://sfx/musicachefao (mp3cut.net).wav" id="5_m83kh"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_v2ewv"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_2mm6k"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_wdxi0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ocld4"]
+size = Vector2(89, 103)
+
+[node name="CenaChefao" type="Node2D"]
+
+[node name="Chefao" type="CharacterBody2D" parent="." groups=["chefao"]]
+script = ExtResource("1_vwmnk")
+tiro_chefe_scn = ExtResource("2_0toyx")
+
+[node name="StatusChefe" type="Control" parent="Chefao"]
+visible = false
+z_index = 10
+layout_mode = 3
+anchors_preset = 0
+offset_left = 28.0
+offset_top = 3.0
+offset_right = 228.0
+offset_bottom = 13.0
+
+[node name="BarraDeVida" type="TextureProgressBar" parent="Chefao/StatusChefe"]
+visible = false
+z_index = 10
+material = SubResource("CanvasItemMaterial_v2ewv")
+layout_mode = 0
+offset_left = -1.0
+offset_top = 3.0
+offset_right = 199.0
+offset_bottom = 13.0
+max_value = 200.0
+value = 100.0
+texture_under = SubResource("CanvasTexture_2mm6k")
+texture_progress = SubResource("CanvasTexture_wdxi0")
+tint_under = Color(1, 0, 0.301961, 1)
+tint_progress = Color(0, 0.301961, 0.301961, 1)
+
+[node name="Sprite2D" type="Sprite2D" parent="Chefao"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("2_vtx7l")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Chefao"]
+position = Vector2(2.5, -2.5)
+shape = SubResource("RectangleShape2D_ocld4")
+
+[node name="Timer" type="Timer" parent="Chefao"]
+autostart = true
+
+[node name="jogador" parent="." instance=ExtResource("3_k17fu")]
+position = Vector2(130, 249)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_m83kh")
+autoplay = true
+
+[connection signal="timeout" from="Chefao/Timer" to="Chefao" method="_on_timer_timeout"]

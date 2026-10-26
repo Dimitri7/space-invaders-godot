@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://c12q3ub3fefsh"]
+
+[ext_resource type="FontFile" uid="uid://cjvfr1ypmrb2n" path="res://fonts/atari-classic-font/AtariClassic-gry3.ttf" id="1_sst7d"]
+[ext_resource type="Script" path="res://cenas/menu.gd" id="1_xt30o"]
+[ext_resource type="VideoStream" path="res://Correção_de_Nome_de_Jogo.ogv" id="2_q53ca"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xt30o")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="."]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.00393704
+anchor_top = -0.00390619
+anchor_right = 1.01181
+anchor_bottom = 0.988281
+offset_right = 1024.0
+offset_bottom = 1016.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.2, 0.2)
+stream = ExtResource("2_q53ca")
+autoplay = true
+expand = true
+loop = true
+metadata/_edit_use_anchors_ = true
+
+[node name="ButtonQuit" type="Button" parent="."]
+layout_mode = 0
+offset_left = 154.0
+offset_top = 205.0
+offset_right = 226.0
+offset_bottom = 229.0
+theme_override_fonts/font = ExtResource("1_sst7d")
+text = "QUIT"
+
+[node name="ButtonPlay" type="Button" parent="."]
+layout_mode = 0
+offset_left = 27.0
+offset_top = 204.0
+offset_right = 99.0
+offset_bottom = 228.0
+theme_override_fonts/font = ExtResource("1_sst7d")
+toggle_mode = true
+text = "PLAY"
+
+[connection signal="pressed" from="ButtonQuit" to="." method="_on_button_quit_pressed"]
+[connection signal="pressed" from="ButtonPlay" to="." method="_on_button_play_pressed"]

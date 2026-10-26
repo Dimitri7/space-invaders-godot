@@ -1,0 +1,85 @@
+[gd_scene load_steps=9 format=3 uid="uid://disyorsio6mhr"]
+
+[ext_resource type="Texture2D" uid="uid://bdpn27ofqkf6r" path="res://Sprites/bonus.png" id="1_fsivs"]
+[ext_resource type="Script" path="res://cenas/bonus.gd" id="1_iqpr1"]
+[ext_resource type="AudioStream" uid="uid://djtjfei01fsbb" path="res://sfx/explosion.wav" id="3_tvrsd"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ulre7"]
+size = Vector2(16, 7)
+
+[sub_resource type="Animation" id="Animation_jhlp0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_i85qi"]
+resource_name = "destruido"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [1, 2]
+}
+
+[sub_resource type="Animation" id="Animation_kus4o"]
+resource_name = "normal"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7x210"]
+_data = {
+"RESET": SubResource("Animation_jhlp0"),
+"destruido": SubResource("Animation_i85qi"),
+"normal": SubResource("Animation_kus4o")
+}
+
+[node name="Bonus" type="CharacterBody2D" groups=["aliens"]]
+position = Vector2(274, 20)
+script = ExtResource("1_iqpr1")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_fsivs")
+hframes = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ulre7")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_7x210")
+}
+autoplay = "normal"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("3_tvrsd")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

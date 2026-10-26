@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://ee7jtcnrmjp3"]
+
+[ext_resource type="Script" path="res://missil.gd" id="1_y7pif"]
+[ext_resource type="Texture2D" uid="uid://dolaacbdc3l37" path="res://Sprites/disparoEnemigo.png" id="2_tuy38"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j2ueg"]
+size = Vector2(2.9375, 6.79184)
+
+[node name="Missil" type="Area2D" groups=["misseis"]]
+script = ExtResource("1_y7pif")
+metadata/_edit_group_ = true
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_tuy38")
+hframes = 2
+frame = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j2ueg")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
